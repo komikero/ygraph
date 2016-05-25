@@ -7,7 +7,7 @@ angular.module('app', [])
     this.ed = 0;
     this.ppp = 0;
     this.state = "Today";
-    this.mapShots = ["－","◯","✕"];
+    this.mapShots = ["－","◯","×"];
     this.mapPlaces = ["－","↑","↗","→","↘","↓","↙","←","↖"];
     if(localStorage.getItem("bstore") == null){
         localStorage.setItem("bstore", "[]");
@@ -186,7 +186,7 @@ window.addEventListener("load", function() {
         scrollTo(0, 1);
     }, 100);
 }, false);
-var hits = ["－","◯","✕"];
+var hits = ["－","◯","×"];
 var indexH = [0,0,0,0];
 function changeHit(tag, n){
     indexH[n] ++;
