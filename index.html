@@ -49,9 +49,9 @@ filter: brightness(70%);"></div>
             <!-- order&date -->
             <div style="padding-top:5px; float:left"><span style="font-size:120%">{{score.order}}</span>　<span style="font-size:100%">{{score.date}}</span><br>
                <!-- スコア -->
-               <table>
+               <table style="position:relative; top:-1em">
                <tr>
-                   <td style="width:1.2em; margin-right:10px; margin-top:5px">{{yumi.mapShots[score.Shots[0]%3]}}</td>
+                   <td style="width:1.2em; margin-right:10px">{{yumi.mapShots[score.Shots[0]%3]}}</td>
                    <td style="width:1.2em; margin-right:10px">{{yumi.mapShots[score.Shots[1]%3]}}</td>
                    <td style="width:1.2em; margin-right:10px">{{yumi.mapShots[score.Shots[2]%3]}}</td>
                    <td style="width:1.2em; margin-right:10px">{{yumi.mapShots[score.Shots[3]%3]}}</td>
