@@ -194,6 +194,7 @@ function changeHit(tag, n){
     indexH[n] ++;
     var e = indexH[n] % 3;
     $(tag).text(hits[e]);
+    indexH[n] = e;
 }
 var arrows = ["－","↑","↗","→","↘","↓","↙","←","↖"];
 var indexP = [0,0,0,0];
@@ -201,6 +202,7 @@ function changePlace(tag, n){
     indexP[n] ++;
     var e = indexP[n] % 9;
     $(tag).text(arrows[e]);
+    indexP[n] = e;
 }
 function openForm(){
     $("#form").css('display', 'block').animate({
