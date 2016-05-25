@@ -7,7 +7,7 @@ angular.module('app', [])
     this.ed = 0;
     this.ppp = 0;
     this.state = "Today";
-    this.mapShots = ["－","◯","×"];
+    this.mapShots = ["－","◯","✕"];
     this.mapPlaces = ["－","↑","↗","→","↘","↓","↙","←","↖"];
     if(localStorage.getItem("bstore") == null){
         localStorage.setItem("bstore", "[]");
@@ -52,10 +52,12 @@ angular.module('app', [])
         this.ppp = 0;
         this.pp = 0;
         this.ed = 0;
+        this.hitPoint = 0;
+        this.shotPoint = 0;
     }
     this.import = function(){
        this.scores = JSON.parse($scope.import);
-    localStorage.setItem("store",$scope.import);
+    localStorage.setItem("bstore",$scope.import);
        closePort();
        $scope.import = "";
    }
@@ -186,7 +188,7 @@ window.addEventListener("load", function() {
         scrollTo(0, 1);
     }, 100);
 }, false);
-var hits = ["－","◯","×"];
+var hits = ["－","◯","✕"];
 var indexH = [0,0,0,0];
 function changeHit(tag, n){
     indexH[n] ++;
