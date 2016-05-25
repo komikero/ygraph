@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link href="themify-icons.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Quicksand:400,300|Josefin+Sans:400,300,100' rel='stylesheet' type='text/css'>
+    <title>Yumi Graph</title>
+    <link rel="stylesheet" href="yumi.css" type="text/css" media="all" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="revizing.js"></script>
+</head>
+
+<body ng-controller="testCtrl as yumi">
+   <!-- ヘッダー部分 -->
+    <div style="line-height:0px; position:fixed; z-index:100; padding:0px; height: 12em; width:100%; overflow:hidden;">
+        <div style="width:100%; height:100%; "><img src="backg.jpg" style="width:100%; position:absolute; top:0em; -webkit-filter: brightness(70%);
+filter: brightness(70%);"></div>
+        <span style="line-height:20px; position: absolute; left:3%; top:5%; color:#FFFFFF; font-size:20px">Yumi Graph</span>
+        <i onclick="openPort()" class="ti-new-window" style="line-height:20px; position: absolute; right:3%; top:5%; color:#FFFFFF; font-size:1em"></i>
+        <span style="line-height:25px; position: absolute; left:6%; top:45%; color:#FFFFFF; font-size:20px">Scores<br>of</span>
+        <span style="line-height:30px; position: absolute; left:6%; top:75%; color:#FFFFFF; font-size:2.5em">{{yumi.state}}</span>
+        <span style="line-height:16px; position: absolute; right:5%; top:55%; color:#FFFFFF; font-size:16px">Shot</span>
+        <span style="line-height:16px; position: absolute; right:5%; top:45%; color:#FFFFFF; font-size:20px; font-family: 'Josefin Sans', sans-serif;">{{yumi.shotPoint}}</span>
+        <span style="line-height:16px; position: absolute; right:20%; top:55%; color:#FFFFFF; font-size:16px">Hit</span>
+        <span style="line-height:16px; position: absolute; right:20%; top:45%; color:#FFFFFF; font-size:20px; font-family: 'Josefin Sans', sans-serif;">{{yumi.hitPoint}}</span>
+        <span style="line-height:16px; position: absolute; right:5%; top:73%; color:#FFFFFF; font-size:16px; font-family: 'Josefin Sans', sans-serif;">{{yumi.ratio}} % Hit</span>
+    </div>
+    <div style="width:1px; height:100%; position:fixed; background-color:#EEEEEE; left:10%;"></div>
+    <!-- メニューボタン -->
+    <div class="menuButton" onclick="openMenu()"><i class="ti-list" style="font-size:1.25em; position:absolute; top:0.7em; left:0.65em; color:#FFFFFF"></i></div>
+    <div id="today" ng-click="yumi.Sorts('Today');yumi.rateReflesh()" class="submenuButton" style="background-color:#9C27B0; position"><span style="position:absolute; color:#FFFFFF; top:0.5em; left:0.7em">T</span></div>
+    <div id="tachi" ng-click="yumi.Sorts('Tachi');yumi.rateReflesh()" class="submenuButton" style="background-color:#F44336"><span style="position:absolute; color:#FFFFFF; top:0.5em; left:0.7em">T</span></div>
+    <div id="practice" ng-click="yumi.Sorts('Practice');yumi.rateReflesh()" class="submenuButton" style="background-color:#2196F3"><span style="position:absolute; color:#FFFFFF; top:0.5em; left:0.7em">P</span></div>
+    <div id="all" ng-click="yumi.Sorts('All');yumi.rateReflesh()" class="submenuButton" style="background-color:#4CAF50"><span style="position:absolute; color:#FFFFFF; top:0.5em; left:0.7em">A</span></div>
+    <!-- リスト部分 -->
+    <div style="position:absolute; top:13em; width:100%">
+    <li ng-repeat="score in yumi.scores track by $index" style="position:relative">
+    <div ng-if="yumi.sort(score)">
+        <div style="margin-left:8%">
+           <!-- 立or練習 -->
+            <div ng-show="score.kind == 'tati'" style="width:1em; height:1em; float:left; margin-right:1em; margin-top:0.5em; border-radius: 50%; background-color:#F44336"></div>
+            <div ng-show="score.kind == 'rensyu'" style="width:1em; height:1em; float:left; margin-right:1em; margin-top:0.5em; border-radius: 50%; background-color:#2196F3"></div>
+            <!-- order&date -->
+            <div style="padding-top:5px; float:left"><span style="font-size:120%">{{score.order}}</span>　<span style="font-size:100%">{{score.date}}</span><br>
+               <!-- スコア -->
+               <table>
+               <tr>
+                   <td style="width:1.2em; margin-right:10px; margin-top:5px">{{yumi.mapShots[score.Shots[0]%3]}}</td>
+                   <td style="width:1.2em; margin-right:10px">{{yumi.mapShots[score.Shots[1]%3]}}</td>
+                   <td style="width:1.2em; margin-right:10px">{{yumi.mapShots[score.Shots[2]%3]}}</td>
+                   <td style="width:1.2em; margin-right:10px">{{yumi.mapShots[score.Shots[3]%3]}}</td>
+               </tr><br>
+                <tr>
+                    <td style="width:1.2em; margin-right:10px">{{yumi.mapPlaces[score.Places[0]%9]}}</td>
+                    <td style="width:1.2em; margin-right:10px">{{yumi.mapPlaces[score.Places[1]%9]}}</td>
+                    <td style="width:1.2em; margin-right:10px">{{yumi.mapPlaces[score.Places[2]%9]}}</td>
+                    <td style="width:1.2em; margin-right:10px">{{yumi.mapPlaces[score.Places[3]%9]}}</td>
+                </tr> 
+                </table>  
+            </div>
+            <!-- メモ -->
+            <div style="margin-top:5px; position:absolute; float:left; left:11em">Memo</div>
+            <i class="ti-trash" ng-click="yumi.del($index); yumi.rateReflesh()" style="color:#757575; margin-top:2px; position:absolute; float:left; top:1.5em; right:1em; font-size:1em"></i>
+            <i class="ti-pencil" ng-click="yumi.edit(score,$index); yumi.rateReflesh()" style="color:#757575; margin-top:2px; position:absolute; float:left; top:3.5em; right:1em; font-size:1em"></i><br>
+            <div style="margin-top:7px; margin-right:4em; position:absolute; float:left; left:18em; font-size:10px;">{{score.memo}}</div>
+        </div>
+        <hr size="1" color="#FFFFFF" style="width:80%; margin-left:15%" noshade>
+        </div>
+    </li>
+      </div>
+    <div class="addButton" ng-click="yumi.dateInit()" onclick="openForm()"><i class="ti-plus" style="position:absolute; top:0.5em; left:0.5em; font-size:2em; color:#FFFFFF"></i></div>
+    <!-- フォーム -->
+    <div id="form">
+        <span style="font-size:50px; color:#FFFFFF; margin-left:15px" onclick="closeForm()" ng-click="yumi.Initialize()">×</span><br>
+        <span style="font-size:24px; color:#FFFFFF; margin-left:30%">Add New Score</span>
+        <br><br><br><br>
+        <div>
+        <span style="color:#FFFFFF; float:left; margin-left:10%">Style</span>
+        <select ng-model="newStyle" id="st" name="select" onFocus="highlight()" onBlur="lowlight()">
+            <option value="rensyu">練習</option> 
+            <option value="tati">立</option>
+        </select>
+        <hr id="styleLine" style="width:60%; margin-left:25%; margin-top:0px; opacity:0.5; color:#FFFFFF" size="1" noshade>
+        </div>
+        <br>
+        <div>
+        <span style="color:#FFFFFF; float:left; margin-left:10%">Order</span>
+        <select ng-model="newOrder" id="or" name="select" onFocus="highlight2()" onBlur="lowlight2()">
+            <option value="1st">1st</option> 
+            <option value="2nd">2nd</option>
+            <option value="3rd">3rd</option>
+            <option value="4th">4th</option>
+            <option value="5th">5th</option>
+            <option value="6th">6th</option>
+            <option value="7th">7th</option>
+            <option value="8th">8th</option>
+            <option value="9th">9th</option>
+            <option value="10th">10th</option>
+            <option value="11th">11th</option>
+            <option value="12th">12th</option>
+            <option value="13th">13th</option>
+            <option value="14th">14th</option>
+            <option value="15th">15th</option>
+        </select>
+        <hr id="styleLine2" style="width:60%; margin-left:25%; margin-top:0px; opacity:0.5; color:#FFFFFF" size="1" noshade>
+        </div>
+        <br>
+        <div>
+        <span style="color:#FFFFFF; float:left; margin-left:10%">Date</span>
+        <input ng-model="newDate" id="da" type="text" onFocus="highlight3()" onBlur="lowlight3()">
+        <hr id="styleLine3" style="width:60%; margin-left:25%; margin-top:0px; opacity:0.5; color:#FFFFFF" size="1" noshade>
+        </div>
+        <br>
+        <table style="width:80%; height:5%; color:#FFFFFF; margin-left:9.5%">
+            <tr>
+                <td style="width:30%"></td>
+                <td align="center">1</td>
+                <td align="center">2</td>
+                <td align="center">3</td>
+                <td align="center">4</td>
+            </tr>
+            <tr style="height:0%">
+                <td style="width:30%">Hit</td>
+                <td align="center"><div id="1Hit" onclick="changeHit('#1Hit',0)" style="width:40%">－</div></td>
+                <td align="center"><div id="2Hit" onclick="changeHit('#2Hit',1)" style="width:40%">－</div></td>
+                <td align="center"><div id="3Hit" onclick="changeHit('#3Hit',2)" style="width:40%">－</div></td>
+                <td align="center"><div id="4Hit" onclick="changeHit('#4Hit',3)" style="width:40%">－</div></td>
+            </tr>
+            <tr>
+                <td style="width:30%">Place</td>
+                <td align="center"><div id="1Place" onclick="changePlace('#1Place',0)" style="width:40%">－</div></td>
+                <td align="center"><div id="2Place" onclick="changePlace('#2Place',1)" style="width:40%">－</div></td>
+                <td align="center"><div id="3Place" onclick="changePlace('#3Place',2)" style="width:40%">－</div></td>
+                <td align="center"><div id="4Place" onclick="changePlace('#4Place',3)" style="width:40%">－</div></td>
+            </tr>
+        </table>
+        <br>
+        <div>
+        <span style="color:#FFFFFF; float:left; margin-left:10%">Memo</span>
+        <input ng-model="newMemo" id="me" type="text" onFocus="highlight4()" onBlur="lowlight4()">
+        <hr id="styleLine4" style="width:60%; margin-left:25%; margin-top:0px; opacity:0.5; color:#FFFFFF" size="1" noshade>
+        </div>
+        <br>
+        <div ng-click="yumi.addNewScore()" onclick="closeForm()" class="addScore"><span style="margin-left:58px; top:8px; position:relative">Add New Score</span></div>
+    </div>
+    <!-- import&export -->
+    <div id="port">
+        <span style="font-size:50px; color:#FFFFFF; margin-left:15px" onclick="closePort()" ng-click="yumi.cp()">×</span><br>
+        <span style="font-size:24px; color:#FFFFFF; margin-left:30%">Import & Export</span>
+        <br><br><br><br>
+        <span style="color:#FFFFFF; float:left; margin-left:10%">Import</span>
+        <input ng-model="import" style="margin-left:15px;" type="text" onFocus="highlight3()" onBlur="lowlight3()">
+        <hr id="styleLine3" style="width:60%; margin-left:25%; margin-top:0px; opacity:0.5; color:#FFFFFF" size="1" noshade>
+        <br><br>
+        <div ng-click="yumi.import()" class="addScore"><span style="left:40%; top:8px; position:relative">Import</span></div>
+        <br><br><br>
+        <span style="color:#FFFFFF; float:left; margin-left:10%">Export</span>
+        <input ng-model="export" style="margin-left:15px;" type="text" onFocus="highlight3()" onBlur="lowlight3()">
+        <hr id="styleLine3" style="width:60%; margin-left:25%; margin-top:0px; opacity:0.5; color:#FFFFFF" size="1" noshade>
+        <br><br>
+        <div ng-click="yumi.export()" class="addScore"><span style="left:40%; top:8px; position:relative">Export</span></div>
+    </div>
+</body>
+</html>

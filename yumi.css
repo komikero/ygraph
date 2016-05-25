@@ -1,0 +1,155 @@
+/* This is a CSS file */
+
+body{
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    margin: 0px;
+    height: 100%;
+}
+
+li{
+    list-style: none;
+}
+
+.addButton{
+    width:4em;
+    height:4em;
+    position:fixed;
+    right:8%;
+    bottom:5%;
+    border-radius: 50%;
+    background-color:#03A9F4;
+    box-shadow: rgba(113,135,164,.65098) 0px 2px 6px 2px;
+    transition:transform 0.2s ease-in-out;
+}
+
+.addButton:active{
+    transform:translate(0,4px);
+    box-shadow: rgba(113,135,164,.65098) 0px 2px 5px 1px;
+}
+
+.menuButton{
+    width:3em;
+    height:3em;
+    position:fixed;
+    right:8%;
+    top:10.5em;
+    border-radius: 50%;
+    background-color:#F44336;
+    box-shadow: rgba(113,135,164,.65098) 0px 1px 4px 1px;
+    transition:transform 0.2s ease-in-out;
+    z-index:200;
+}
+
+.menuButton:active{
+    transform:translate(0,4px);
+    box-shadow: rgba(113,135,164,.65098) 0px 2px 5px 1px;
+}
+
+.submenuButton{
+    width:2em;
+    height:2em;
+    position:fixed;
+    right:10%;
+    top:11em;
+    border-radius: 50%;
+    box-shadow: rgba(113,135,164,.65098) 0px 1px 4px 1px;
+    transition:transform 0.2s ease-in-out;
+    z-index:150;
+}
+
+.submenuButton:active{
+    transform:translate(0,4px);
+    box-shadow: rgba(113,135,164,.65098) 0px 2px 5px 1px;
+}
+
+.addScore{
+    border-radius: 3px;
+    background-color:#03A9F4;
+    color:#FFFFFF;
+    height:30px;
+    width:60%;
+    margin-left:20%;
+    box-shadow: rgba(50,50,50,.4) 0px 2px 6px 2px;
+    transition:transform 0.2s ease-in-out;
+}
+
+.addScore:active{
+    transform:translate(0,4px);
+    box-shadow: rgba(0,0,0,.4) 0px 2px 5px 1px;
+}
+
+#form{
+    display:none;
+    position:fixed;
+    top:1920px;
+    height:2500px;
+    width:100%;
+    background-color: #0D47A1;
+    z-index:200;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-bottom: 1px;
+    background-color: #0D47A1;
+    width:60%;
+    padding:0px;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    color: #FFFFFF;
+}
+
+#st{
+    margin-left:20px;
+}
+
+#or{
+    margin-left:15px;
+}
+
+#da{
+    margin-left:25px;
+}
+
+#me{
+    margin-left:14px;
+}
+
+input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-bottom: 1px;
+    background-color: #0D47A1;
+    width:60%;
+    margin-left:5%;
+    padding:0px;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    color: #FFFFFF;
+}
+
+.ti-trash:active{
+    color:#212121;
+}
+
+.ti-pencil:active{
+    color:#212121;
+}
+
+#port{
+    display:none;
+    position:fixed;
+    top:1920px;
+    height:2500px;
+    width:100%;
+    background-color: #0D47A1;
+    z-index:200;
+}
